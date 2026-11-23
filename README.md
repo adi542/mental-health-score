@@ -8,6 +8,25 @@ Predicts a student's mental health score (0–10) from their social media usage,
 
 > Based on [tanishq-latent/Mental-Health-Score](https://github.com/tanishq-latent/Mental-Health-Score).
 
+## Features
+
+1. **Why this score?**: shows how much each input raised or lowered the prediction compared with a typical student in the dataset. For each input, the app swaps in the typical value and re-runs the model (an occlusion-style explanation).
+2. **What-if sliders**: change sleep, screen time, phone unlocks, study, activity and stress, and the score updates live.
+3. **Personalised tips**: compares you with students who scored 7+, and uses the model to estimate how much each change would move your score.
+4. **Out-of-range warnings**: flags inputs outside the training data, where the model can't be trusted.
+5. **History**: every reading is saved to SQLite and shown as a line chart.
+6. **Model stats**: compares Linear Regression, Decision Tree and Random Forest (R², MAE and RMSE on the same 70/30 split as the notebook) and shows feature importance.
+
+## API
+
+| Method | Route | What it does |
+|---|---|---|
+| `POST` | `/predict` | Score only |
+| `POST` | `/analyze` | Score + explanation + tips + warnings (saved to history; add `?save=false` to skip saving) |
+| `GET` | `/model-stats` | Model comparison + feature importance |
+| `GET` | `/history` | Saved readings |
+| `DELETE` | `/history` | Clear history |
+
 ## Run locally
 
 Requires Python 3.10+.

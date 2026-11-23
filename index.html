@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css" />
-</head>S
+</head>
 <body>
 
 <div class="noise-overlay" aria-hidden="true"></div>
@@ -213,11 +213,13 @@
         </div>
         <p class="score-band" id="score-band">—</p>
         <p class="score-context" id="score-context"></p>
+        <div class="score-warnings" id="score-warnings" hidden></div>
         <button type="button" class="reset-btn" id="reset-btn">Run another read</button>
       </div>
 
       <div class="state state-error" id="state-error" hidden>
         <div class="error-icon" aria-hidden="true">!</div>
+        <p class="error-label" id="error-label"></p>
         <p class="error-copy" id="error-copy"></p>
         <button type="button" class="reset-btn" id="error-retry-btn">Try again</button>
       </div>
@@ -226,6 +228,93 @@
   </aside>
 
 </main>
+
+<!-- INSIGHTS (shown after a prediction) -->
+<section class="insights" id="insights" hidden>
+  <div class="insights-grid">
+
+    <article class="card" id="explain-card">
+      <header class="card-head">
+        <span class="legend-index">04</span>
+        <div>
+          <h2 class="card-title">Why this score?</h2>
+          <p class="card-sub">How much each input pushed your score up or down, compared with a typical student in the dataset.</p>
+        </div>
+      </header>
+      <div class="explain-list" id="explain-list"></div>
+      <p class="card-foot">Method: each input is swapped for the typical value (median, or most common answer) and the model is re-run. The difference is that input's impact.</p>
+    </article>
+
+    <article class="card" id="whatif-card">
+      <header class="card-head">
+        <span class="legend-index">05</span>
+        <div>
+          <h2 class="card-title">What if…?</h2>
+          <p class="card-sub">Drag the sliders to see how your predicted score would change.</p>
+        </div>
+      </header>
+      <div class="whatif-score">
+        <div>
+          <span class="whatif-label">What-if score</span>
+          <span class="whatif-number" id="whatif-number">—</span>
+        </div>
+        <span class="whatif-delta" id="whatif-delta"></span>
+      </div>
+      <div class="whatif-bar-wrap"><div class="whatif-bar"><div class="whatif-bar-fill" id="whatif-bar-fill"></div></div><div class="whatif-bar-base" id="whatif-bar-base" title="Your actual score"></div></div>
+      <div class="sliders" id="sliders"></div>
+      <div class="whatif-stress">
+        <label for="whatif-stress">Stress level</label>
+        <select id="whatif-stress">
+          <option>Low</option><option>Medium</option><option>High</option><option>Very High</option>
+        </select>
+      </div>
+      <button type="button" class="ghost-btn" id="whatif-reset">Reset to my answers</button>
+    </article>
+
+    <article class="card card-wide" id="tips-card">
+      <header class="card-head">
+        <span class="legend-index">06</span>
+        <div>
+          <h2 class="card-title">Personalised tips</h2>
+          <p class="card-sub">Compared with students in the dataset who scored 7 or above, and checked against the model.</p>
+        </div>
+      </header>
+      <div class="tips-list" id="tips-list"></div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ALWAYS-VISIBLE: HISTORY + MODEL -->
+<section class="insights">
+  <div class="insights-grid">
+
+    <article class="card" id="history-card">
+      <header class="card-head">
+        <span class="legend-index">07</span>
+        <div>
+          <h2 class="card-title">Your history</h2>
+          <p class="card-sub">Every reading is saved by the backend (SQLite), so you can track how your score changes.</p>
+        </div>
+      </header>
+      <div class="history-chart" id="history-chart"></div>
+      <ul class="history-list" id="history-list"></ul>
+      <button type="button" class="ghost-btn" id="history-clear">Clear history</button>
+    </article>
+
+    <article class="card" id="model-card">
+      <header class="card-head">
+        <span class="legend-index">08</span>
+        <div>
+          <h2 class="card-title">About the model</h2>
+          <p class="card-sub" id="model-sub">How accurate the model is on students it never saw during training.</p>
+        </div>
+      </header>
+      <div id="model-body"><p class="muted">Loading model stats…</p></div>
+    </article>
+
+  </div>
+</section>
 
 <footer class="site-footer">
   <p>Built for informational purposes only — this is not a clinical assessment. If you're struggling, please talk to someone you trust.</p>
