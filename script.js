@@ -1,7 +1,9 @@
 (() => {
   "use strict";
 
-  const API_BASE = "http://127.0.0.1:8000";
+  // Served by the backend (local or deployed) -> same origin.
+  // Opened directly as a file -> fall back to the local server.
+  const API_BASE = location.protocol.startsWith("http") ? location.origin : "http://127.0.0.1:8000";
 
   const form = document.getElementById("predict-form");
   const submitBtn = document.getElementById("submit-btn");

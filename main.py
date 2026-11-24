@@ -9,6 +9,7 @@ import numpy as np
 import pandas as pd
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 from sklearn.base import clone
 from sklearn.linear_model import LinearRegression
@@ -310,9 +311,25 @@ def compute_model_stats():
 # ---------------------------------------------------------------
 # Routes
 # ---------------------------------------------------------------
-@app.get('/')
-def greet():
-    return {'message': 'Mental Health Score API is running. Open /docs to try it.'}
+# ---- Website (served by the same server, so one deploy gives one link) ----
+@app.get('/', include_in_schema=False)
+def home():
+    return FileResponse(BASE_DIR / 'index.html')
+
+
+@app.get('/style.css', include_in_schema=False)
+def stylesheet():
+    return FileResponse(BASE_DIR / 'style.css', media_type='text/css')
+
+
+@app.get('/script.js', include_in_schema=False)
+def javascript():
+    return FileResponse(BASE_DIR / 'script.js', media_type='application/javascript')
+
+
+@app.get('/health')
+def health():
+    return {'status': 'ok', 'message': 'Mental Health Score API is running. Open /docs to try it.'}
 
 
 @app.post('/predict', response_model=PredictionResponse)

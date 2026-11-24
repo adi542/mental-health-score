@@ -23,6 +23,7 @@ Predicts a student's mental health score (0–10) from their social media usage,
 |---|---|---|
 | `POST` | `/predict` | Score only |
 | `POST` | `/analyze` | Score + explanation + tips + warnings (saved to history; add `?save=false` to skip saving) |
+| `GET` | `/health` | Health check |
 | `GET` | `/model-stats` | Model comparison + feature importance |
 | `GET` | `/history` | Saved readings |
 | `DELETE` | `/history` | Clear history |
@@ -41,9 +42,17 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-The API runs at http://127.0.0.1:8000. You can try it at http://127.0.0.1:8000/docs.
+Then open **http://127.0.0.1:8000**. The same server hosts the website and the API (interactive API docs at http://127.0.0.1:8000/docs).
 
-To use the UI, keep the server running and open `index.html` in your browser.
+## Deploy (Render, free)
+
+The repo includes `render.yaml` and `.python-version`, so Render can set everything up automatically:
+
+1. Sign in at [render.com](https://render.com) with GitHub.
+2. **New → Blueprint**, pick this repo, and click **Apply**.
+3. Wait for the build to finish and open the `onrender.com` link.
+
+Notes: the free plan sleeps after ~15 minutes without visitors, so the first visit can take up to a minute. The history database lives on Render's temporary disk, so it resets when the service restarts or redeploys.
 
 ## Example request
 
