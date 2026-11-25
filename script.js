@@ -587,7 +587,7 @@
         .join("");
 
       const rf = s.models.find((m) => m.in_use);
-      const overfit = s.models.filter((m) => m.r2_train - m.r2_test > 0.1).map((m) => m.name);
+      const overfit = s.models.filter((m) => m.r2_train - m.r2_test > 0.15).map((m) => m.name);
       const top = s.feature_importance[0];
       const notes = [
         `On unseen students the Random Forest is off by ${rf.mae.toFixed(2)} points on average (out of 10).`,

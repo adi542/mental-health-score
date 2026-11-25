@@ -4,7 +4,7 @@ Predicts a student's mental health score (0–10) from their social media usage,
 
 - **Backend:** FastAPI serving a scikit-learn Random Forest pipeline (`Mental_Health_Model.pkl`)
 - **Frontend:** plain HTML/CSS/JS (`index.html`) that calls the API
-- **Training:** `ML_Project.ipynb` on the *Student Social Media And Mental Health Impact* dataset
+- **Training:** `train.py` (same steps as `ML_Project.ipynb`) on the *Student Social Media And Mental Health Impact* dataset
 
 > Based on [tanishq-latent/Mental-Health-Score](https://github.com/tanishq-latent/Mental-Health-Score).
 
@@ -44,6 +44,14 @@ uvicorn main:app --reload
 
 Then open **http://127.0.0.1:8000**. The same server hosts the website and the API (interactive API docs at http://127.0.0.1:8000/docs).
 
+## Retrain the model
+
+```bash
+python3 train.py
+```
+
+Cleans the data, compares Linear Regression and Random Forest, tunes the Random Forest with 5-fold cross-validation, and saves `Mental_Health_Model.pkl` (takes about a minute).
+
 ## Deploy (Render, free)
 
 The repo includes `render.yaml` and `.python-version`, so Render can set everything up automatically:
@@ -78,7 +86,7 @@ Notes: the free plan sleeps after ~15 minutes without visitors, so the first vis
 Response:
 
 ```json
-{ "predicted_mental_health_score": 5.67 }
+{ "predicted_mental_health_score": 5.68 }
 ```
 
 ## Disclaimer
